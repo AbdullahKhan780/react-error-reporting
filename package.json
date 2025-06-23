@@ -1,7 +1,7 @@
 {
   "name": "react-error-reporting",
   "private": false,
-  "version": "0.0.3",
+  "version": "0.0.4",
   "author": {
     "name": "Abdullah Khan",
     "email": "abdullahkhansk@yahoo.com",
@@ -16,6 +16,14 @@
     "url": "https://github.com/AbdullahKhan780/react-error-reporting/issues"
   },
   "homepage": "https://github.com/AbdullahKhan780/react-error-reporting#readme",
+  "keywords": [
+    "network error viewer",
+    "error reporting",
+    "axios",
+    "http request",
+    "developer tool",
+    "network failure"
+  ],
   "type": "module",
   "main": "dist/ReactErrorReporting.umd.js",
   "module": "dist/ReactErrorReporting.es.js",
