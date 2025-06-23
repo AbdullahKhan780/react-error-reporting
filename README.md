@@ -1,54 +1,91 @@
-# React + TypeScript + Vite
+# 🛡️ React Error Reporting
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A React component that listens to custom events and displays detailed Axios error stack information in a beautiful UI.
 
-Currently, two official plugins are available:
+![Screenshot - Default View](./preview/Screenshot-1.png)
+![Screenshot - Expanded View](./preview/Screenshot-2.png)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+---
 
-## Expanding the ESLint configuration
+## Features
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+- 📦 Displays Axios/fetch error stack
+- 🧠 Smart "Copy All" functionality
+- 🌍 i18n-ready with `translateKeys` override
+- 🎨 Pluggable empty UI state
+- 🧰 Works with any `EventTarget` (custom, DOM, window)
 
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+---
+
+## Installation
+
+```bash 
+npm install react-error-reporting
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+## Basic Usage
+### Import the component and use it:
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+```tsx
+import { ReactErrorReporting } from "react-error-reporting";
 
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+<ReactErrorReporting
+  eventKey="REQ_ERR"
+  eventTarget={EVENT_TARGET}
+/>
 ```
+
+
+## Dispatch the event from your Axios interceptor:
+
+```tsx
+axios.interceptors.response.use(
+  res => res,
+  err => {
+    const errorEvent = new CustomEvent("REQ_ERR", { detail: err });
+    EVENT_TARGET.dispatchEvent(errorEvent);
+    return Promise.reject(err);
+  }
+); 
+```
+
+## Props
+
+| Props        | Type           |  Required  | Description |
+| ------------- |:-------------:| :------:   | :----------: |
+| eventKey      | string        |   ✅       | The event name to listen for |
+| eventTarget   | EventTarget   |   ✅       | The source to attach the listener to |
+| translateKeys | object        |    ❌      | Override labels for copy, expand, etc. (see below) |
+| emptyComponent | React.ReactNode | ❌ | Custom component to render when there's no error |
+| onCopy | () => void | ❌ | Callback triggered when "Copy All" is clicked |
+
+## i18n Translation Keys
+### You can customize labels like this:
+
+```tsx
+<ReactErrorReporting
+  eventKey="REQ_ERR"
+  eventTarget={window}
+  translateKeys={{
+    copyAll: "Copy",
+    requestDetails: "Error Info",
+    collapse: "Hide",
+    expand: "Show"
+  }}
+/>
+```
+
+License MIT © Abdullah Khan
+
+Author Built by Abdullah Khan — PRs & contributions welcome!
+
+---
+
+Let me know if you’d like:
+
+- GitHub Action badge for npm release
+- Badge for version/downloads
+- Light/dark theme screenshots split
+- GitHub Pages setup for live demo
+
+Just drop your username and screenshot paths if you want me to insert them directly.
