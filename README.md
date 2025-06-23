@@ -2,8 +2,8 @@
 
 A React component that listens to custom events and displays detailed Axios error stack information in a beautiful UI.
 
-![Screenshot - Default View](./preview/Screenshot-1.png)
-![Screenshot - Expanded View](./preview/Screenshot-2.png)
+![Screenshot - Default View](./preview/img1.png)
+![Screenshot - Expanded View](./preview/img2.png)
 
 ---
 
@@ -52,7 +52,7 @@ axios.interceptors.response.use(
 ## Props
 
 | Props        | Type           |  Required  | Description |
-| ------------- |:-------------:| :------:   | :----------: |
+| ------------- |-------------| :------:   | ---------- |
 | eventKey      | string        |   ✅       | The event name to listen for |
 | eventTarget   | EventTarget   |   ✅       | The source to attach the listener to |
 | translateKeys | object        |    ❌      | Override labels for copy, expand, etc. (see below) |
@@ -78,14 +78,3 @@ axios.interceptors.response.use(
 License MIT © Abdullah Khan
 
 Author Built by Abdullah Khan — PRs & contributions welcome!
-
----
-
-Let me know if you’d like:
-
-- GitHub Action badge for npm release
-- Badge for version/downloads
-- Light/dark theme screenshots split
-- GitHub Pages setup for live demo
-
-Just drop your username and screenshot paths if you want me to insert them directly.
